@@ -1,7 +1,6 @@
 ---
 import '../styles.css';
-import Counter from '../components/counter.jsx';
-import Navigator from '../components/navbar.jsx';
+import Blogview from '../BlogComponents/blogview.jsx';
 ---
 
 <html lang="en">
@@ -10,12 +9,11 @@ import Navigator from '../components/navbar.jsx';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Warthog Network</title>
+		<title>Astro blog page</title>
 	</head>
 	<body>
-		<Navigator client:load/>
 		<h1>Astro</h1>
-		<h1>Wart</h1>
-		<Counter client:load />
+		<h1>blog</h1>
+		<Blogview/>
 	</body>
 </html>

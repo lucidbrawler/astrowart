@@ -7,3 +7,82 @@
 body {
     font-family: 'Montserrat', sans-serif;
 }
+.navigator{
+    display: flex;
+    flex-direction: row;
+}
+.navlink{
+    height: 2.5rem;
+  }
+.logo{
+    height: 4rem;
+    
+  }
+
+  .logohome1{
+    display: flex;
+    flex-direction: row;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    max-width: 20rem;
+    border-radius: 4rem;
+    position: relative;
+   color: rgb(204, 174, 6);
+   font-size: medium;
+   
+  }
+  .logohome2{  
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    max-width: 20rem;
+    border-radius: 4rem;
+    position: relative;
+   
+  
+  }
+  .logohome2:after {
+    
+    content: '';
+   position: absolute;
+   width: 100%;
+   height: 0.01rem;
+   left: 0;
+   bottom: 0;
+   background:yellow;
+  }
+  .logo1left::after{
+    transform: scale(0,1);
+    transition: transform 0.3s ease;
+    transform-origin: 0% 100%;
+  }
+  .logo2left::after{
+    transform: scale(0,1);
+    transition: transform 0.3s ease;
+    transform-origin: 0% 100%;
+  }
+  .logohome1:after {
+    
+    content: '';
+   position: absolute;
+   width: 100%;
+   height: 0.01rem;
+   left: 0;
+   bottom: 0;
+   background:yellow;
+  }
+  .logo1left::after{
+    transform: scale(0,1);
+    transition: transform 0.3s ease;
+    transform-origin: 0% 100%;
+  }
+  .logohome{
+  
+    max-width: 20rem;
+    border-radius: 4rem;
+    
+    padding: .5rem;
+  }
+  .logo1left:hover::after{
+   transform: scale(1,1);
+  }
+  .logo2left:hover::after{
+    transform: scale(1,1);
+   }
