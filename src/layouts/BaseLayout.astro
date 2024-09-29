@@ -1,0 +1,25 @@
+---
+import '../styles.css';
+import Astrobar from '../components/AstroBar.astro';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Warthog Network</title>
+	</head>
+	<body>
+		<Astrobar />
+	
+        <main>
+            <slot />
+        </main>
+
+        <footer>
+            <p><small>2024 Warthog site test.</small></p>
+        </footer>
+	</body>
+</html>

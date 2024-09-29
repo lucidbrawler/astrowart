@@ -4,6 +4,41 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10rem);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0rem);
+  }
+  80% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0rem);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn .25s ease-out forwards;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1rem;
+}
+
+small {
+  font-size: xx-small;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
 }
