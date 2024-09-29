@@ -7,7 +7,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
 }
-.navigator{
+.flexrow{
     display: flex;
     flex-direction: row;
 }
@@ -15,7 +15,7 @@ body {
     height: 2.5rem;
   }
 .logo{
-    height: 4rem;
+    height: 5rem;
     
   }
 
@@ -73,6 +73,10 @@ body {
     transition: transform 0.3s ease;
     transform-origin: 0% 100%;
   }
+.HeroTitle{
+    font-size: 3rem;
+}
+
   .logohome{
   
     max-width: 20rem;
