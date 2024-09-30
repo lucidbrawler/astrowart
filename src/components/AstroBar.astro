@@ -1,11 +1,11 @@
 ---
 import '../styles.css';
 const links = [
-    { name: 'GET STARTED', href: '/index2'},
-    { name: 'NEWS', href: '/news2' },
-    { name: 'DOCS', href: 'https://www.warthog.network/docs/'},
+    { name: 'GET STARTED', href: '/getstarted'},
+    { name: 'NEWS', href: '/news' },
+    { name: 'DOCS', href: 'https://www.warthog.network/docs/', target: '_blank'},
     { name: 'FAQS', href: '/faqs'},
-    { name: 'EXPLORER', href: 'https://wartscan.io/'}
+    { name: 'EXPLORER', href: 'https://wartscan.io/', target: '_blank'}
 ];
 
 const networks = [
@@ -18,10 +18,10 @@ const networks = [
 
 <nav>
     <section class="flexrow">
-        <img class="logo animate-fadeIn" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/>
+        <a href="/"><img class="logo animate-fadeIn" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/></a>
         <div class='flexrow mt-3'>
         {links.map((link) => (
-                <a class="logohome" href={link.href}>
+                <a class="logohome"  target={link.target} href={link.href}>
                     <p class="logohome2 logo1left">{link.name}</p>
                 </a>
         ))}
@@ -29,7 +29,7 @@ const networks = [
         <div class='flexrow absolute top-0 right-0'>
             {networks.map((network) => (
                 <a class="logohome" href={network.href}>
-                    <p class="logohome2 logo1left"><img class='navlink' src={'/Images/' + network.imgSrc} alt="logo" /></p>
+                    <p class="logohome2 logo1left"><img class='navlink'  src={'/Images/' + network.imgSrc} alt="logo" /></p>
                 </a>
             ))}
         </div>

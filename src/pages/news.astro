@@ -1,19 +1,29 @@
 ---
-import '../styles.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+const title = 'News Blog';
+const newsUpdates = await Astro.glob('../content/news/*.md');
 
+const sortedNewsUpdates = Object.values(newsUpdates).sort(
+    (a, b) => {
+        const dateA = new Date(b.frontmatter.date).getTime();
+        const dateB = new Date(a.frontmatter.date).getTime();
+
+        return dateB - dateA;
+    }
+);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.png" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro blog page</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-		<h1>News</h1>
-	
-	</body>
-</html>
+<BaseLayout title = {title}>
+    <h1 class="">Latest News</h1>
+    <ul>
+        {sortedNewsUpdates.map((news) => (
+        <li>
+            <h2>{news.frontmatter.title}</h2>
+
+            <p><small>{news.frontmatter.date}</small></p>
+            <div set:html={news.compiledContent()}></div>
+            
+        </li>
+        ))}
+    </ul>
+</BaseLayout>

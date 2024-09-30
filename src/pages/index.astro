@@ -1,22 +1,25 @@
 ---
-import '../styles.css';
-import Hero from '../components/hero.jsx';
-import Navigator from '../components/navbar.jsx';
-
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+const title ="Warthog Network"
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.png" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Warthog Network</title>
-	</head>
-	<body>
-		<Navigator client:load/>
-	
-		<Hero client:load />
-	</body>
-</html>
+<BaseLayout title={title} >
+    <div class='flex justify-left m-[5rem]'>
+        <section>
+        <h1 class="HeroTitle"> 
+            Rethinking<br/>
+            The Blockchain
+        </h1>
+        <p class="max-w-[25rem]">
+            "Warthog’s decentralized network empowers individuals with fair, balanced, and synergized CPU/GPU work. 
+            It secures hardcoded DeFi and token technologies, 
+            eliminating the risks of smart contracts. Our goal is a safer, more efficient blockchain, 
+            aligned with the original vision of cryptocurrency: "one CPU, one vote."
+        </p>
+        </section>
+        <section>
+        <img />
+        </section>
+        
+    </div>
+</BaseLayout>
