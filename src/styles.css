@@ -51,7 +51,7 @@ body {
   }
 .logo{
     height: 5rem;
-    
+    min-height: 3rem;
   }
 
   .logohome1{
