@@ -1,0 +1,51 @@
+---
+import ParallaxLayout from "../layouts/ParallaxLayout.astro";
+---
+
+<html>
+  <head>
+    <title>Test Parallax Transitions</title>
+  </head>
+  <body class="bg-gray-900">
+    <ParallaxLayout 
+      backgroundImage="../Images/Parallax/ParallaxTest1B.webp" 
+      scrollSpeed=".01"
+      backgroundPositionY="-400px"
+    >
+      <h1 class="text-5xl text-white">Main Content on Parallax</h1>
+    </ParallaxLayout>
+
+    <section class="relative h-screen flex items-center justify-center bg-black">
+      <h2 class="text-4xl text-white">Static Section</h2>
+    </section>
+
+    <ParallaxLayout 
+      backgroundImage="../Images/Parallax/ParallaxTest2B.webp" 
+      scrollSpeed=".01" 
+      backgroundPositionY="-450px"
+    />
+
+    <section class="relative h-screen flex items-center justify-center bg-gray-800">
+      <p class="text-2xl text-white">More Static Content</p>
+    </section>
+
+    <ParallaxLayout 
+      backgroundImage="../Images/Parallax/ParallaxTest3B.webp" 
+      scrollSpeed="1"
+      backgroundPositionY="1600px"
+    >
+      <h1 class="text-5xl text-yellow-300">Another Parallax Section</h1>
+      <p class="text-lg text-white">With text content on top</p>
+    </ParallaxLayout>
+    
+    <section class="relative h-screen flex items-center justify-center bg-black">
+        <h2 class="text-4xl text-white">Static Section</h2>
+      </section>
+
+    <ParallaxLayout 
+      backgroundImage="../Images/Parallax/ParallaxTest1B.webp" 
+      scrollSpeed="1.5" 
+      backgroundPositionY="-200px"
+    />
+  </body>
+</html>

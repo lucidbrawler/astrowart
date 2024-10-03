@@ -1,0 +1,44 @@
+---
+const { backgroundImage, scrollSpeed = "1", backgroundPositionY = "-50px" } = Astro.props;
+---
+
+<script>
+    import { gsap } from "gsap";
+    import ScrollTrigger from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    class ParallaxEffect extends HTMLElement {
+        connectedCallback() {
+            const scrollSpeed = this.dataset.scrollspeed;
+            const backgroundPositionY = this.dataset.backgroundpositiony;
+            //console.log('test');
+            //console.log(this.dataset)
+            //console.log("ScrollSpeed: " + scrollSpeed + ", BackgroundPosY: " + backgroundPositionY);
+
+            if (typeof window !== "undefined") {
+                gsap.to(".parallax-bg", {
+                    backgroundPositionY: backgroundPositionY,
+                    scrollTrigger: {
+                        trigger: this,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true,
+                        markers: false
+                    },
+                    duration: scrollSpeed,
+                });  
+            }
+           
+        }
+    }
+
+    customElements.define('parallax-effect', ParallaxEffect)
+</script>
+
+<parallax-effect data-scrollSpeed={scrollSpeed} data-backgroundPositionY={backgroundPositionY}>
+    <section class="relative h-screen parallax-bg bg-cover bg-center" style={`background-image: url(${backgroundImage})`}>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <slot />
+        </div>
+    </section>
+</parallax-effect>

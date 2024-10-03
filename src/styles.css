@@ -26,6 +26,11 @@
   animation: fadeIn .25s ease-out forwards;
 }
 
+.parallax-bg {
+  background-attachment: scroll;
+  background-size: cover;
+}
+
 h2 {
   font-size: 2rem;
   font-weight: bold;
