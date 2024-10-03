@@ -20,12 +20,17 @@ const { backgroundImage, scrollSpeed = "1", backgroundPositionY = "-50px" } = As
                     backgroundPositionY: backgroundPositionY,
                     scrollTrigger: {
                         trigger: this,
-                        start: "top bottom",
+                        start: "top bottom", //Try top 80% to start the trigger early
                         end: "bottom top",
                         scrub: true,
                         markers: false
+                        //Look into testing these additional properties
+                        //anticipation: 1, //used to make the start and end transitions smoother
+                        //invalidateOnRefresh: true, makes GSAP recalculate on resize of window
+                        //pin: true //pins section to smooth out animation
                     },
                     duration: scrollSpeed,
+                    //Could try adding ease: "power1.inOut" as another method to smooth
                 });  
             }
            
