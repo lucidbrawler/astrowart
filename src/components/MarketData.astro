@@ -1,0 +1,67 @@
+---
+
+---
+<script type="module">
+  class MarketDataComponent extends HTMLElement {
+    constructor() {
+      super();
+      this.refreshInterval = 60000;
+      this.timer = null;
+    }
+
+    connectedCallback() {
+      this.fetchMarketData();
+      this.startTimer();
+    }
+
+    disconnectedCallback() {
+      clearInterval(this.timer);
+    }
+
+    async fetchMarketData() {
+        const url = 'https://api.xeggex.com/api/v2/market/getbysymbol/wart_usdt';
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          
+          document.getElementById('symbol').textContent = data.symbol;
+          document.getElementById('price').textContent = '$' + data.lastPrice;
+          document.getElementById('updated').textContent = new Date().toLocaleTimeString();
+        } catch (error) {
+          console.error('Error fetching market data:', error);
+          document.getElementById('symbol').textContent = 'Error';
+          document.getElementById('price').textContent = 'N/A';
+          document.getElementById('updated').textContent = 'Error fetching data';
+        }
+      }
+
+    startTimer() {
+      let countdown = this.refreshInterval / 1000;
+      this.timer = setInterval(() => {
+        countdown--;
+        document.querySelector('#countdown').textContent = `Next update in: ${countdown} seconds`;
+        if (countdown <= 0) {
+          countdown = this.refreshInterval / 1000;
+          this.fetchMarketData();
+        }
+      }, 1000);
+    }
+  }
+
+  customElements.define('market-data', MarketDataComponent);
+</script>
+
+<market-data>
+  <section class="bg-blue-500 border border-gray-300 border-2 rounded-lg p-4">
+    <img class="logo animate-fadeIn" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/><h1>Warthog Market Data</h1>
+    <div>
+      <h2>Symbol: <span id="symbol">Loading...</span></h2>
+      <p>Xeggex.com - Price: <span id="price">Loading...</span></p>
+      <p>Last updated: <span id="updated">Not yet updated</span></p>
+      <small class="small" id="countdown"></small>
+    </div>
+  </section>
+</market-data>

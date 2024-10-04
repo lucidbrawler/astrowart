@@ -1,5 +1,6 @@
 ---
 import ParallaxLayout from "../layouts/ParallaxLayout.astro";
+import MarketData from "../components/MarketData.astro";
 ---
 
 <html>
@@ -22,8 +23,9 @@ import ParallaxLayout from "../layouts/ParallaxLayout.astro";
     <ParallaxLayout 
       backgroundImage="../Images/Parallax/ParallaxTest2B.webp" 
       scrollSpeed=".01" 
-      backgroundPositionY="-450px"
-    />
+      backgroundPositionY="850px">
+      <MarketData></MarketData>
+    </ParallaxLayout>
 
     <section class="relative h-screen flex items-center justify-center bg-gray-800">
       <p class="text-2xl text-white">More Static Content</p>
