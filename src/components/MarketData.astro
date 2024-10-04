@@ -27,9 +27,12 @@
           }
           const data = await response.json();
           
+          this.DisplayMinedInfo(data);
+
           document.getElementById('symbol').textContent = data.symbol;
           document.getElementById('price').textContent = '$' + data.lastPrice;
           document.getElementById('updated').textContent = new Date().toLocaleTimeString();
+          document.getElementById('marketCap').textContent = '$' + data.marketcapNumber.toLocaleString();
         } catch (error) {
           console.error('Error fetching market data:', error);
           document.getElementById('symbol').textContent = 'Error';
@@ -42,12 +45,22 @@
       let countdown = this.refreshInterval / 1000;
       this.timer = setInterval(() => {
         countdown--;
-        document.querySelector('#countdown').textContent = `Next update in: ${countdown} seconds`;
+        document.getElementById('countdown').textContent = `Next update in: ${countdown} seconds`;
         if (countdown <= 0) {
           countdown = this.refreshInterval / 1000;
           this.fetchMarketData();
         }
       }, 1000);
+    }
+
+    DisplayMinedInfo(apiData) {
+      const maxSupply = 18921600
+      const circulatingSupply = parseInt(apiData.primaryCirculation);
+      const percentage = ((circulatingSupply / maxSupply) * 100)/2;
+      
+      const minedPath = document.getElementById('mined');
+      minedPath.style.strokeDasharray = `${percentage}, 100`;
+      document.getElementById('circulatingWart').textContent = circulatingSupply.toLocaleString('en-US') + ' WART';
     }
   }
 
@@ -55,13 +68,35 @@
 </script>
 
 <market-data>
-  <section class="bg-blue-500 border border-gray-300 border-2 rounded-lg p-4">
-    <img class="logo animate-fadeIn" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/><h1>Warthog Market Data</h1>
-    <div>
-      <h2>Symbol: <span id="symbol">Loading...</span></h2>
-      <p>Xeggex.com - Price: <span id="price">Loading...</span></p>
-      <p>Last updated: <span id="updated">Not yet updated</span></p>
-      <small class="small" id="countdown"></small>
+  <section class="flex justify-between items-center bg-blue-500 border border-gray-300 border-2 rounded-lg p-4">
+    <div class="">
+      <img class="logo animate-fadeIn" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/>
+      <h1 class="text-1x1 font-bold text-black">Warthog Market Data</h1>
+      <div>
+        <h2>Symbol: <span id="symbol">Loading...</span></h2>
+        <p>Xeggex.com - Price: <span id="price">Loading...</span></p>
+        <p>Last updated: <span id="updated">Not yet updated</span></p>
+        <p>MarketCap: <span id="marketCap">Not yet updated</span></p>
+        <small class="small" id="countdown"></small>
+      </div>
+    </div>
+    <div class="ml-8">
+      <div class="relative w-32 h-32">
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="text-1xl font-bold text-black mt-10">MINED</span>
+            <span id="circulatingWart" class="block text-sm font-medium text-black-500"></span>
+            <span class="block text-sm font-bold text-black-500">Total Supply</span>
+            <span class="block text-sm font-medium text-black-500">18,921,600</span>
+        </div>
+        <svg class="w-full h-full" viewBox="0 0 36 36">
+            <path id="whole" class="text-gray-600 stroke-current" stroke-dasharray="75, 100" stroke-width="1" fill="none"
+                d="M2.0845 18 
+                   a 15.9155 15.9155 0 1 1 31.831 0" />
+            <path id="mined" class="text-yellow-600 stroke-current" stroke-dasharray="75, 100" stroke-width="4" fill="none"
+                   d="M2.0845 18 
+                   a 15.9155 15.9155 0 1 1 31.831 0" />
+        </svg>
+      </div>
     </div>
   </section>
 </market-data>
