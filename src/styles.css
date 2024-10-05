@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -20,11 +21,6 @@
     transform: translateY(0rem);
   }
 }
-
-/*{
-  outline: 1px solid red;
- }
-*/
 
 .animate-fadeIn {
   animation: fadeIn .25s ease-out forwards;
@@ -51,24 +47,16 @@ small {
 body {
     font-family: 'Montserrat', sans-serif;
 }
-main {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
 .flexrow{
     display: flex;
     flex-direction: row;
 }
-
 .navlink{
     height: 2.5rem;
   }
-
 /*hamburger*/
-
 .hamburger {
-  
+  padding-right: 20px;
   cursor: pointer;
   padding: .5rem;
 }
@@ -81,7 +69,6 @@ main {
   margin-bottom: 10px;
   background-color: #352e2e;
 }
-
 /* nav styles */
 
 .nav-links {
@@ -89,20 +76,15 @@ main {
 }
 
 .nav-links a {
-  
   display: flex;
   justify-content: center;
 }
 
 
 .expanded {
-  
   display: unset;
 }
-.dot {
-  margin-top: 8px;
-  max-height: .4rem;
-}
+
 @media screen and (min-width: 1024px) {
   .nav-links {
     margin-left: 5em;
@@ -112,9 +94,8 @@ main {
     display: inline-block;
     padding: .5rem;
   }
-
+  
   /*hamburger*/
-
   .hamburger {
     display: none;
   }
@@ -195,14 +176,3 @@ main {
   .logo2left:hover::after{
     transform: scale(1,1);
    }
-
-
-
-
-   /*hero*/
-   /* Vector */
-   .DunesStyle {
-    max-width: 100%;
-  object-fit: scale-down;
-    border-radius: 5rem 5rem 10rem 20rem;
-  }
