@@ -1,22 +1,32 @@
 ---
-
+import { Ellipsis } from 'react-bootstrap/esm/PageItem';
+import yellowDot from '../BalkyImages/Ellipse1.png';
+import News from '../pages/news.astro';
+import Dunes from './dunes.astro';
 ---
 
-    <div class='flex justify-left p-6'>
-       <section>
+      <div class='flex justify-left p-6'>
+       <section class="p-6">
           <h1 class="HeroTitle"> 
             Rethinking<br/>
             The Blockchain
           </h1>
-          <p class="max-w-[25rem]">
+          <p class="max-w-[25rem] min-w-[25rem] mb-10">
             "Warthog’s decentralized network empowers individuals with fair, balanced, and synergized CPU/GPU work. 
             It secures hardcoded DeFi and token technologies, 
             eliminating the risks of smart contracts. Our goal is a safer, more efficient blockchain, 
             aligned with the original vision of cryptocurrency: "one CPU, one vote."
           </p>
-       </section>
-        <section>
-          <img />
+        <div class="flex">
+          <img class="dot" src={yellowDot.src}><p class="justify-start">1.2 Million in liquidity currently suliplied</p>
+        </div>
         </section>
-       
+     
     </div>
+  <Dunes/>
+   
+
+  
+   
+
+   

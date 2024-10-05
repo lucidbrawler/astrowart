@@ -1,0 +1,28 @@
+---
+import { Picture } from 'astro:assets';
+const articles = [
+    { imgSrc: 'NEWS.png', href: 'https://github.com/warthog-network'},    
+    { imgSrc: 'NEWS2.png', href: 'https://discord.com/invite/QMDV8bGTdQ'},
+    { imgSrc: 'NEWS3.png', href: 'https://t.me/warthognetwork'},
+  
+];
+import NEWS from '../BalkyImages/NEWS.png';
+
+---
+
+<h1 class="NEWS p-2">Whats New</h1>
+<section class="flex NEWS">
+    
+ <a class="p-10" href=''>
+        <p class=""><img class=''  src={NEWS.src} alt="logo" /></p>
+ </a>
+ <a class="p-10" href=''>
+    <p class=""><img class=''  src={NEWS.src} alt="logo" /></p>
+</a>
+
+<a class="p-10" href=''>
+    <p class=""><img class=''  src={NEWS.src} alt="logo" /></p>
+</a>
+
+
+</section>
