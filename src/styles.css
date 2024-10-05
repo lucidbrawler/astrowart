@@ -126,6 +126,9 @@ main {
   .NEWS{
     grid-area: news;
   }
+  .navbar{
+    grid-area: navbar;
+  }
   /*hamburger*/
 
   .hamburger {
