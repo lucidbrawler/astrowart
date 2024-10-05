@@ -112,23 +112,7 @@ main {
     display: inline-block;
     padding: .5rem;
   }
-  main{
-    display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: 
-  'navbar navbar'
-  'hero dunes'
-  'news news'
-  'footer footer'
-  ;
-  
-  }
-  .NEWS{
-    grid-area: news;
-  }
-  .navbar{
-    grid-area: navbar;
-  }
+
   /*hamburger*/
 
   .hamburger {
