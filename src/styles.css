@@ -85,6 +85,15 @@ body {
   display: unset;
 }
 
+main{
+  display: grid;
+    grid-template-columns:  1fr;
+    grid-template-areas: 
+    'herotext'
+    'heroimg'
+    ;
+
+}
 @media screen and (min-width: 1024px) {
   .nav-links {
     margin-left: 5em;
@@ -95,6 +104,13 @@ body {
     padding: .5rem;
   }
   
+  main{
+  
+    display: grid;
+    grid-template-columns: .75fr 1fr;
+    grid-template-areas: 
+    'herotext heroimg'
+    ;}
   /*hamburger*/
   .hamburger {
     display: none;
