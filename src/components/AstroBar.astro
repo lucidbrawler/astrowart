@@ -16,17 +16,18 @@ const networks = [
 ];
 ---
 
-<nav class="lg:flex hidden" >
-    <section class="flexrow">
-        <a  class="logo animate-fadeIn" href="/"><img class="logo animate-fadeIn" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/></a>
-        <div class='flexrow mt-3'>
+<nav class="lg:flex" >
+    <a  class="logo animate-fadeIn" href="/"><img class="logo animate-fadeIn" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/></a>
+    <section class="lg:flex justify-center">
+       
+        <div class='lg:flex mt-3 nav-links'>
         {links.map((link) => (
                 <a class="logohome"  target={link.target} href={link.href}>
                     <p class="logohome2 logo1left">{link.name}</p>
                 </a>
         ))}
         </div>
-        <div class='flexrow absolute top-0 right-0'>
+        <div class='flexrow absolute bottom-0 right-0'>
             {networks.map((network) => (
                 <a class="logohome" href={network.href}>
                     <p class="logohome2 logo1left"><img class='navlink'  src={'/Images/' + network.imgSrc} alt="logo" /></p>

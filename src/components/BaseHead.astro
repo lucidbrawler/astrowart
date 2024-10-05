@@ -1,9 +1,17 @@
 ---
+import '../styles.css';
 const {title} = Astro.props;
----
+import Astrobar from '../components/AstroBar.astro';
+import Hamburger from './Hamburger.astro';
 
+---
+<head>
 <meta charset="utf-8" />
 <link rel="icon" type="image/svg+xml" href="/favicon.png" />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>
+
+<Astrobar />
+<Hamburger />
+</head>

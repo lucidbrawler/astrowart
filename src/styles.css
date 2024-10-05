@@ -54,6 +54,53 @@ body {
 .navlink{
     height: 2.5rem;
   }
+/*hamburger*/
+.hamburger {
+  padding-right: 20px;
+  cursor: pointer;
+  padding: .5rem;
+}
+
+.hamburger .line {
+  display: block;
+  width: 40px;
+  height: 5px;
+  
+  margin-bottom: 10px;
+  background-color: #352e2e;
+}
+/* nav styles */
+
+.nav-links {
+  display: none;
+}
+
+.nav-links a {
+  display: flex;
+  justify-content: center;
+}
+
+
+.expanded {
+  display: unset;
+}
+
+@media screen and (min-width: 1024px) {
+  .nav-links {
+    margin-left: 5em;
+  }
+
+  .nav-links a {
+    display: inline-block;
+    padding: .5rem;
+  }
+  
+  /*hamburger*/
+  .hamburger {
+    display: none;
+  }
+}
+
 .logo{
     height: 5rem;
     min-height: 3rem;
@@ -63,7 +110,7 @@ body {
     display: flex;
     flex-direction: row;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    max-width: 20rem;
+    
     border-radius: 4rem;
     position: relative;
    color: rgb(204, 174, 6);
@@ -72,7 +119,7 @@ body {
   }
   .logohome2{  
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    max-width: 20rem;
+    
     border-radius: 4rem;
     position: relative;
    
@@ -118,7 +165,7 @@ body {
 
   .logohome{
   
-    max-width: 20rem;
+   justify-content: center;
     border-radius: 4rem;
     
     padding: .5rem;
