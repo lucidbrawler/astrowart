@@ -1,7 +1,67 @@
 ---
 
 ---
-<script type="module">
+<script>
+  import { createChart } from 'lightweight-charts';
+
+  class wartChart extends HTMLElement {
+      async connectedCallback() {
+        const container = this; 
+
+        const chartOptions = { 
+          width: container.clientWidth,
+          height: container.clientHeight,
+          layout: { 
+            textColor: 'white', 
+            background: { type: 'solid', color: 'black' }
+          }
+        };
+
+        const chart = createChart(container, chartOptions);
+        const candlestickSeries = chart.addCandlestickSeries({ upColor: '#26a69a', downColor: '#ef5350', borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350' });
+
+        const chartData = await this.fetchInitialChartData();
+        const remappedData = chartData.bars.map(({ open, high, low, close, time}) => ({open, high, low, close, time: time / 1000}));
+        
+        console.log(remappedData);
+        
+        candlestickSeries.setData(remappedData);
+        
+        chart.timeScale().fitContent(); 
+        
+        window.addEventListener('resize', () => {
+            chart.resize(container.clientWidth, container.clientHeight);
+        })
+      }
+
+      async fetchInitialChartData() {
+        const now = Date.now();
+        const fourWeeksAgo = now - 2419200000;
+        let data;
+
+        const url = 'https://api.xeggex.com/api/v2/market/candles?symbol=wart_usdt&resolution=1440&countBack=28&firstDataRequest=1';
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          data = await response.json();
+          return data
+                    
+        } catch (error) {
+          console.error('Error fetching market data:', error);
+          data = [{ open: 10, high: 10.63, low: 9.49, close: 9.55, time: 1642427876 }, { open: 9.55, high: 10.30, low: 9.42, close: 9.94, time: 1642514276 }, { open: 9.94, high: 10.17, low: 9.92, close: 9.78, time: 1642600676 }, { open: 9.78, high: 10.59, low: 9.18, close: 9.51, time: 1642687076 }, { open: 9.51, high: 10.46, low: 9.10, close: 10.17, time: 1642773476 }, { open: 10.17, high: 10.96, low: 10.16, close: 10.47, time: 1642859876 }, { open: 10.47, high: 11.39, low: 10.40, close: 10.81, time: 1642946276 }, { open: 10.81, high: 11.60, low: 10.30, close: 10.75, time: 1643032676 }, { open: 10.75, high: 11.60, low: 10.49, close: 10.93, time: 1643119076 }, { open: 10.93, high: 11.53, low: 10.76, close: 10.96, time: 1643205476 }];
+        }
+
+        return data;
+      }
+    }
+
+    customElements.define('wart-chart', wartChart);
+
+    
+</script>
+<script>
   class MarketDataComponent extends HTMLElement {
     constructor() {
       super();
@@ -68,36 +128,43 @@
 </script>
 
 <market-data>
-  <section class="flex justify-between items-center bg-blue-500 border border-gray-300 border-2 rounded-lg p-4">
-    <div class="">
-      <img class="logo animate-fadeIn" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/>
-      
-      <div class="ml-6">
-        <h1 class="text-1x1 font-bold text-black">Warthog Market Data</h1>
-        <h2>Symbol: <span id="symbol">Loading...</span></h2>
-        <p>Xeggex.com - Price: <span id="price">Loading...</span></p>
-        <p>MarketCap: <span id="marketCap">Not yet updated</span></p>
-        <p>Last updated: <span id="updated">Not yet updated</span></p>
-        <small class="small" id="countdown"></small>
-      </div>
-    </div>
-    <div class="ml-12 mr-6">
-      <div class="relative w-62 h-62">
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-            <span class="text-1xl font-bold text-black mt-10">MINED</span>
-            <span id="circulatingWart" class="block text-sm font-medium text-black-500"></span>
-            <span class="block text-sm font-bold text-black-500">Total Supply</span>
-            <span class="block text-sm font-medium text-black-500">18,921,600</span>
+  <div class="">
+    <wart-chart class="wartChart flex justify-between items-center bg-black border border-gray-300 border-2 rounded-lg p-4">
+     
+    </wart-chart>
+    <section class="ml-6 mr-6 flex justify-between items-center bg-gray-500 rounded-b-lg p-4">
+  
+      <div class="">
+        <img class="logo" src="/Images/Warthog_2024_Full Logo.svg" alt="logo"/>
+        
+        <div class="ml-6">
+          <h2><span id="symbol">Loading...</span></h2>
+          <p>Xeggex.com - Price: <span id="price">Loading...</span></p>
+          <p>MarketCap: <span id="marketCap">Not yet updated</span></p>
+          <p>Last updated: <span id="updated">Not yet updated</span></p>
+          <small class="small" id="countdown"></small>
         </div>
-        <svg class="w-full h-full" viewBox="0 0 36 20">
-            <path id="whole" class="text-gray-600 stroke-current" stroke-dasharray="75, 100" stroke-width="1" fill="none"
-                d="M2.0845 18 
-                   a 15.9155 15.9155 0 1 1 31.831 0" />
-            <path id="mined" class="text-yellow-600 stroke-current" stroke-dasharray="75, 100" stroke-width="4" fill="none"
-                   d="M2.0845 18 
-                   a 15.9155 15.9155 0 1 1 31.831 0" />
-        </svg>
       </div>
-    </div>
-  </section>
+      <div class="ml-12 mr-6">
+        <div class="relative w-62 h-62">
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span class="text-1xl font-bold text-black mt-10">MINED</span>
+              <span id="circulatingWart" class="block text-sm font-medium text-black-500"></span>
+              <span class="block text-sm font-bold text-black-500">Total Supply</span>
+              <span class="block text-sm font-medium text-black-500">18,921,600</span>
+          </div>
+          <svg class="w-full h-full" viewBox="0 0 36 20">
+              <path id="whole" class="text-gray-600 stroke-current" stroke-dasharray="75, 100" stroke-width="1" fill="none"
+                  d="M2.0845 18 
+                    a 15.9155 15.9155 0 1 1 31.831 0" />
+              <path id="mined" class="text-yellow-600 stroke-current" stroke-dasharray="75, 100" stroke-width="4" fill="none"
+                    d="M2.0845 18 
+                    a 15.9155 15.9155 0 1 1 31.831 0" />
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
+ 
+  
 </market-data>
