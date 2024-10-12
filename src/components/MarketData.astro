@@ -5,8 +5,18 @@
   import { createChart } from 'lightweight-charts';
 
   class wartChart extends HTMLElement {
-      async connectedCallback() {
-        const container = this; 
+    constructor() {
+      super();
+      this.refreshInterval = 60000;
+      this.timer = null;
+      this.chart = null;
+      this.candlestickSeries = null;
+      this.areaSeries = null;
+      this.candlesOn = false;
+    }
+    
+    async connectedCallback() {
+        const container = document.getElementById("realChart"); 
 
         const chartOptions = { 
           width: container.clientWidth,
@@ -14,24 +24,77 @@
           layout: { 
             textColor: 'white', 
             background: { type: 'solid', color: 'black' }
+          },
+          grid: {
+            vertLines: {
+              color: 'transparent'
+            },
+            horzLines: {
+              color: 'transparent'
+            }
           }
         };
 
-        const chart = createChart(container, chartOptions);
-        const candlestickSeries = chart.addCandlestickSeries({ upColor: '#26a69a', downColor: '#ef5350', borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350' });
+        this.chart = createChart(container, chartOptions);
+        this.areaSeries = this.chart.addAreaSeries({
+            lastValueVisible: false, // hide the last value marker for this series
+            crosshairMarkerVisible: false, // hide the crosshair marker for this series
+            lineColor: 'rgba(0, 128, 0, 1)', // hide the line
+            topColor: 'rgba(0, 128, 0, 0.8)',
+            bottomColor: 'rgba(0, 128, 0, 0.1)',
+          });
+        this.candlestickSeries = this.chart.addCandlestickSeries({ 
+            upColor: '#26a69a', 
+            downColor: '#ef5350', 
+            borderVisible: false, 
+            wickUpColor: '#26a69a', 
+            wickDownColor: '#ef5350',
+            visible: false 
+          });
+        
 
         const chartData = await this.fetchInitialChartData();
         const remappedData = chartData.bars.map(({ open, high, low, close, time}) => ({open, high, low, close, time: time / 1000}));
-        
+        const remappedAreaData = chartData.bars.map(datapoint => ({
+            time: datapoint.time / 1000,
+            value: (datapoint.close + datapoint.open) / 2,
+        }));
+
         console.log(remappedData);
+        console.log(remappedAreaData);
         
-        candlestickSeries.setData(remappedData);
+
+        this.candlestickSeries.setData(remappedData);
+        this.areaSeries.setData(remappedAreaData);
         
-        chart.timeScale().fitContent(); 
+        this.chart.timeScale().fitContent(); 
+
+        document.getElementById("toggleChart").addEventListener('click', () => this.ToggleCharts())
         
         window.addEventListener('resize', () => {
-            chart.resize(container.clientWidth, container.clientHeight);
+            this.chart.resize(container.clientWidth, container.clientHeight);
         })
+      }
+
+      ToggleCharts() {
+          if (this.candlesOn) {
+            this.candlestickSeries.applyOptions({
+              visible: false
+            });
+            this.areaSeries.applyOptions({
+              lineColor: 'rgba(0, 128, 0, 1)',
+              visible: true
+            });
+          }else{
+            this.areaSeries.applyOptions({
+              lineColor: 'transparent',
+              visible: false
+            });
+            this.candlestickSeries.applyOptions({
+              visible: true
+            });
+          }
+          this.candlesOn = !this.candlesOn;
       }
 
       async fetchInitialChartData() {
@@ -127,10 +190,18 @@
   customElements.define('market-data', MarketDataComponent);
 </script>
 
-<market-data>
-  <div class="">
-    <wart-chart class="wartChart flex justify-between items-center bg-black border border-gray-300 border-2 rounded-lg p-4">
-     
+<market-data class="w-9/12">
+  <div>
+    <wart-chart class="relative">
+      <button id="toggleChart" class="block ml-auto mb-4 mr-4 bg-black text-white border border-gray-300 rounded-lg px-4 py-2">Candle/Line</button> 
+      <div id = "realChart" class="wartChart flex justify-between items-center bg-black"/>
+      <div class="flex justify-center space-x-64 mt-4">
+        <button class="bg-black text-white border border-gray-300 rounded-lg px-4 py-2">1 Day</button>
+        <button class="bg-black text-white border border-gray-300 rounded-lg px-4 py-2">5 Days</button>
+        <button class="bg-black text-white border border-gray-300 rounded-lg px-4 py-2">1 Month</button>
+        <button class="bg-black text-white border border-gray-300 rounded-lg px-4 py-2">6 Months</button>
+      </div>
+      
     </wart-chart>
     <section class="ml-6 mr-6 flex justify-between items-center bg-gray-500 rounded-b-lg p-4">
   
