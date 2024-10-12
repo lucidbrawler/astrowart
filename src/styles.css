@@ -92,6 +92,31 @@ body {
   padding: .5rem;
 }
 
+.container {
+  position: relative;
+  width: 100%;
+}
+.container img {
+  width: 100%;
+  height: auto;
+}
+.container .btn {
+  position: absolute;
+  top: 59%;
+  left: 76%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: gold;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  padding: 15px 50px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.container .btn:hover {
+  background-color: rgb(173, 150, 46);
+}
 .hamburger .line {
   display: block;
   width: 40px;
@@ -125,7 +150,12 @@ main{
     ;
 
 }
+
 @media screen and (min-width: 1024px) {
+  .container {
+    position: relative;
+    width: 60rem;
+  }
   .nav-links {
     margin-left: 5em;
   }
