@@ -2,7 +2,8 @@
 import warthogShape from "../BalkyImages/warthogShape.svg"
 ---
 <script>
-  import { createChart } from 'lightweight-charts';
+
+import { createChart } from 'lightweight-charts';
 
   class wartChart extends HTMLElement {
     constructor() {
@@ -14,6 +15,7 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
       this.areaSeries = null;
       this.candlesOn = false;
       this.cachedData = new Map();
+      this.LoadCachedDataFromLocalStorage()
     }
     
     async connectedCallback() {
@@ -110,6 +112,7 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
             }
             data = await response.json();
             this.cachedData.set(keyName, data)
+            this.SaveCachedDataToLocalStorage(this.cachedData);
             //console.log("Queried and saved to cache");
           } catch (error) {
             console.error('Error fetching market data:', error);
@@ -134,6 +137,32 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
 
       CachedDataKey(cb, drm) {
         return cb.toString() + ":" + drm;
+      }
+
+      SaveCachedDataToLocalStorage(dataMap) {
+        const obj = Object.fromEntries(dataMap);
+        const dataObj = {
+          mapData: obj,
+          timestamp: Date.now()
+        };
+
+        localStorage.setItem("WarthogCharts", JSON.stringify(dataObj));
+        //console.log("Saved to localstorage");
+      }
+
+      LoadCachedDataFromLocalStorage() {
+        const storedData = JSON.parse(localStorage.getItem("WarthogCharts"));
+
+        if (storedData) {
+          const currentTime = Date.now();
+          const oneDayMs = 86400000;
+          if ("timestamp" in storedData && "mapData" in storedData) {
+            if (currentTime - storedData.timestamp < oneDayMs) {
+              this.cachedData = new Map(Object.entries(storedData.mapData));
+              //console.log("Loaded from localstorage");
+            }
+          }
+        }
       }
 
       async GetSixMonthChartData(button = null) {
