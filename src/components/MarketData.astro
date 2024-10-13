@@ -13,6 +13,7 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
       this.candlestickSeries = null;
       this.areaSeries = null;
       this.candlesOn = false;
+      this.cachedData = new Map();
     }
     
     async connectedCallback() {
@@ -94,19 +95,28 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
 
       async fetchChartData(countBack, dataResolutionInMinutes) {
         let data;
-               
-        const url = 'https://api.xeggex.com/api/v2/market/candles?symbol=wart_usdt&resolution=' + dataResolutionInMinutes + '&countBack=' + countBack.toString() + '&firstDataRequest=1';
-        try {
-          const response = await fetch(url);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          data = await response.json();
-        } catch (error) {
-          console.error('Error fetching market data:', error);
-          data = [{ open: 10, high: 10.63, low: 9.49, close: 9.55, time: 1642427876 }, { open: 9.55, high: 10.30, low: 9.42, close: 9.94, time: 1642514276 }, { open: 9.94, high: 10.17, low: 9.92, close: 9.78, time: 1642600676 }, { open: 9.78, high: 10.59, low: 9.18, close: 9.51, time: 1642687076 }, { open: 9.51, high: 10.46, low: 9.10, close: 10.17, time: 1642773476 }, { open: 10.17, high: 10.96, low: 10.16, close: 10.47, time: 1642859876 }, { open: 10.47, high: 11.39, low: 10.40, close: 10.81, time: 1642946276 }, { open: 10.81, high: 11.60, low: 10.30, close: 10.75, time: 1643032676 }, { open: 10.75, high: 11.60, low: 10.49, close: 10.93, time: 1643119076 }, { open: 10.93, high: 11.53, low: 10.76, close: 10.96, time: 1643205476 }];
-        }
+        const keyName = this.CachedDataKey(countBack, dataResolutionInMinutes);
+        //console.log(keyName);
 
+        if (this.cachedData.has(keyName)) {
+          data = this.cachedData.get(keyName);
+          //console.log("It was cached");
+        }else{
+          const url = 'https://api.xeggex.com/api/v2/market/candles?symbol=wart_usdt&resolution=' + dataResolutionInMinutes + '&countBack=' + countBack.toString() + '&firstDataRequest=1';
+          try {
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            data = await response.json();
+            this.cachedData.set(keyName, data)
+            //console.log("Queried and saved to cache");
+          } catch (error) {
+            console.error('Error fetching market data:', error);
+            data = [{ open: 10, high: 10.63, low: 9.49, close: 9.55, time: 1642427876 }, { open: 9.55, high: 10.30, low: 9.42, close: 9.94, time: 1642514276 }, { open: 9.94, high: 10.17, low: 9.92, close: 9.78, time: 1642600676 }, { open: 9.78, high: 10.59, low: 9.18, close: 9.51, time: 1642687076 }, { open: 9.51, high: 10.46, low: 9.10, close: 10.17, time: 1642773476 }, { open: 10.17, high: 10.96, low: 10.16, close: 10.47, time: 1642859876 }, { open: 10.47, high: 11.39, low: 10.40, close: 10.81, time: 1642946276 }, { open: 10.81, high: 11.60, low: 10.30, close: 10.75, time: 1643032676 }, { open: 10.75, high: 11.60, low: 10.49, close: 10.93, time: 1643119076 }, { open: 10.93, high: 11.53, low: 10.76, close: 10.96, time: 1643205476 }];
+          }
+        }
+        
         const remappedData = data.bars.map(({ open, high, low, close, time}) => ({open, high, low, close, time: time / 1000}));
         const remappedAreaData = data.bars.map(datapoint => ({
             time: datapoint.time / 1000,
@@ -120,6 +130,10 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
         this.areaSeries.setData(remappedAreaData);
         
         this.chart.timeScale().fitContent(); 
+      }
+
+      CachedDataKey(cb, drm) {
+        return cb.toString() + ":" + drm;
       }
 
       async GetSixMonthChartData(button = null) {
