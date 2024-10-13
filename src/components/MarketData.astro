@@ -261,16 +261,22 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
   customElements.define('market-data', MarketDataComponent);
 </script>
 
-<market-data class="sm:w-full md:w-9/12 h-128 w-full">
+<market-data class="sm:w-full md:w-9/12 h-128">
   <div>
     <wart-chart class="relative">
       <button id="toggleChart" class="block ml-auto mb-4 mr-4 bg-black text-white text-xs border border-gray-300 rounded-lg px-4 py-2">Candle/Line</button> 
       <div id = "realChart" class="wartChart flex justify-between items-center bg-black"/>
       <div class="flex md:flex-row sm:flex-col justify-center mt-4">
-        <button id="1dayChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2 md:w-auto sm:w-full">1 Day</button>
-        <button id="5dayChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2 md:w-auto sm:w-full">5 Days</button>
-        <button id="1moChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2 md:w-auto sm:w-full">1 Month</button>
-        <button id="6moChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2 md:w-auto sm:w-full">6 Months</button>
+        <div>
+          <button id="1dayChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2 md:w-auto sm:w-full">1 Day</button>
+          <button id="5dayChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2 md:w-auto sm:w-full">5 Days</button>
+        </div>
+        <div>
+          <button id="1moChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2 md:w-auto sm:w-full">1 Month</button>
+          <button id="6moChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2 md:w-auto sm:w-full">6 Months</button>
+        </div>
+        
+        
       </div>
       
     </wart-chart>
