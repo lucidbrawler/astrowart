@@ -100,11 +100,11 @@ import { createChart } from 'lightweight-charts';
         const keyName = this.CachedDataKey(countBack, dataResolutionInMinutes);
         //console.log(keyName);
 
-        if (this.cachedData.has(keyName)) {
+        if (this.cachedData.has(keyName) && this.CachedDataNotOld(this.cachedData.get(keyName), dataResolutionInMinutes)) {
           data = this.cachedData.get(keyName);
           //console.log("It was cached");
         }else{
-          const url = 'https://api.xeggex.com/api/v2/market/candles?symbol=wart_usdt&resolution=' + dataResolutionInMinutes + '&countBack=' + countBack.toString() + '&firstDataRequest=1';
+          const url = 'https://api.xeggex.com/api/v2/market/candles?symbol=wart_usdt&resolution=' + dataResolutionInMinutes.toString() + '&countBack=' + countBack.toString() + '&firstDataRequest=1';
           try {
             const response = await fetch(url);
             if (!response.ok) {
@@ -136,7 +136,20 @@ import { createChart } from 'lightweight-charts';
       }
 
       CachedDataKey(cb, drm) {
-        return cb.toString() + ":" + drm;
+        return cb.toString() + ":" + drm.toString();
+      }
+
+      CachedDataNotOld(data, updateFrequencyInMin) {
+        const dateNow = Date.now();
+        //console.log(data);
+        const lastUpdate = data.bars[data.bars.length - 1].time;
+        const dateDiff = dateNow - lastUpdate; 
+        if (dateDiff < (1000 * 60 * updateFrequencyInMin)) {
+          //console.log("Cached data is still new");
+          return true;
+        }
+        //console.log("Cached data is old, time to replace it.")
+        return false;
       }
 
       SaveCachedDataToLocalStorage(dataMap) {
@@ -174,7 +187,7 @@ import { createChart } from 'lightweight-charts';
 
         const diffInDays = Math.floor(diffInMillisec / (1000 * 60 * 60 * 24));
 
-        await this.fetchChartData(diffInDays, '1440');
+        await this.fetchChartData(diffInDays, 1440);
 
         if (button) {
           this.ClearButtonHighlights();
@@ -191,7 +204,7 @@ import { createChart } from 'lightweight-charts';
 
         const diffInDays = Math.floor(diffInMillisec / (1000 * 60 * 60 * 24));
 
-        await this.fetchChartData(diffInDays, '1440');
+        await this.fetchChartData(diffInDays, 1440);
 
         if (button) {
           this.ClearButtonHighlights();
@@ -201,7 +214,7 @@ import { createChart } from 'lightweight-charts';
 
       async GetFiveDayChartData(button = null) {
         //with resolution of 60mins at 5 days we want 24hrs * 5 days = countBack 120 data points
-        await this.fetchChartData(120, '60');
+        await this.fetchChartData(120, 60);
 
         if (button) {
           this.ClearButtonHighlights();
@@ -211,7 +224,7 @@ import { createChart } from 'lightweight-charts';
 
       async GetOneDayChartData(button = null) {
         //with resolution of 30mins at 1 day we want to countBack 48 data points
-        await this.fetchChartData(48, '30');
+        await this.fetchChartData(48, 30);
 
         if (button) {
           this.ClearButtonHighlights();
