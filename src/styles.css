@@ -59,7 +59,9 @@
   line-height: 20px;
 }
 
-
+.chartSelected {
+  background-color: darkslategray;
+}
 
 .percentage {
   margin-left: auto;

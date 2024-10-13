@@ -32,6 +32,9 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
             horzLines: {
               color: 'transparent'
             }
+          },
+          timeScale: {
+            timeVisible: true
           }
         };
 
@@ -52,25 +55,17 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
             visible: false 
           });
         
-
-        const chartData = await this.fetchInitialChartData();
-        const remappedData = chartData.bars.map(({ open, high, low, close, time}) => ({open, high, low, close, time: time / 1000}));
-        const remappedAreaData = chartData.bars.map(datapoint => ({
-            time: datapoint.time / 1000,
-            value: (datapoint.close + datapoint.open) / 2,
-        }));
-
-        console.log(remappedData);
-        console.log(remappedAreaData);
         
+        const sixMoButton = document.getElementById('6moChart');
+        await this.GetSixMonthChartData(sixMoButton);
 
-        this.candlestickSeries.setData(remappedData);
-        this.areaSeries.setData(remappedAreaData);
-        
-        this.chart.timeScale().fitContent(); 
 
-        document.getElementById("toggleChart").addEventListener('click', () => this.ToggleCharts())
-        
+        document.getElementById("toggleChart").addEventListener('click', () => this.ToggleCharts());
+        document.getElementById("6moChart").addEventListener('click', (event) => this.GetSixMonthChartData(event.target));
+        document.getElementById("1moChart").addEventListener('click', (event) => this.GetOneMonthChartData(event.target));
+        document.getElementById("5dayChart").addEventListener('click', (event) => this.GetFiveDayChartData(event.target));
+        document.getElementById("1dayChart").addEventListener('click', (event) => this.GetOneDayChartData(event.target));
+
         window.addEventListener('resize', () => {
             this.chart.resize(container.clientWidth, container.clientHeight);
         })
@@ -97,26 +92,96 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
           this.candlesOn = !this.candlesOn;
       }
 
-      async fetchInitialChartData() {
-        const now = Date.now();
-        const fourWeeksAgo = now - 2419200000;
+      async fetchChartData(countBack, dataResolutionInMinutes) {
         let data;
-
-        const url = 'https://api.xeggex.com/api/v2/market/candles?symbol=wart_usdt&resolution=1440&countBack=28&firstDataRequest=1';
+               
+        const url = 'https://api.xeggex.com/api/v2/market/candles?symbol=wart_usdt&resolution=' + dataResolutionInMinutes + '&countBack=' + countBack.toString() + '&firstDataRequest=1';
         try {
           const response = await fetch(url);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
           data = await response.json();
-          return data
-                    
         } catch (error) {
           console.error('Error fetching market data:', error);
           data = [{ open: 10, high: 10.63, low: 9.49, close: 9.55, time: 1642427876 }, { open: 9.55, high: 10.30, low: 9.42, close: 9.94, time: 1642514276 }, { open: 9.94, high: 10.17, low: 9.92, close: 9.78, time: 1642600676 }, { open: 9.78, high: 10.59, low: 9.18, close: 9.51, time: 1642687076 }, { open: 9.51, high: 10.46, low: 9.10, close: 10.17, time: 1642773476 }, { open: 10.17, high: 10.96, low: 10.16, close: 10.47, time: 1642859876 }, { open: 10.47, high: 11.39, low: 10.40, close: 10.81, time: 1642946276 }, { open: 10.81, high: 11.60, low: 10.30, close: 10.75, time: 1643032676 }, { open: 10.75, high: 11.60, low: 10.49, close: 10.93, time: 1643119076 }, { open: 10.93, high: 11.53, low: 10.76, close: 10.96, time: 1643205476 }];
         }
 
-        return data;
+        const remappedData = data.bars.map(({ open, high, low, close, time}) => ({open, high, low, close, time: time / 1000}));
+        const remappedAreaData = data.bars.map(datapoint => ({
+            time: datapoint.time / 1000,
+            value: (datapoint.close + datapoint.open) / 2,
+        }));
+
+        console.log(remappedData);
+        console.log(remappedAreaData);
+
+        this.candlestickSeries.setData(remappedData);
+        this.areaSeries.setData(remappedAreaData);
+        
+        this.chart.timeScale().fitContent(); 
+      }
+
+      async GetSixMonthChartData(button = null) {
+        const today = new Date();
+
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(today.getMonth() - 6);
+        const diffInMillisec = today - sixMonthsAgo;
+
+        const diffInDays = Math.floor(diffInMillisec / (1000 * 60 * 60 * 24));
+
+        await this.fetchChartData(diffInDays, '1440');
+
+        if (button) {
+          this.ClearButtonHighlights();
+          button.classList.add("chartSelected");
+        }
+      }
+
+      async GetOneMonthChartData(button = null) {
+        const today = new Date();
+
+        const oneMonthsAgo = new Date();
+        oneMonthsAgo.setMonth(today.getMonth() - 1);
+        const diffInMillisec = today - oneMonthsAgo;
+
+        const diffInDays = Math.floor(diffInMillisec / (1000 * 60 * 60 * 24));
+
+        await this.fetchChartData(diffInDays, '1440');
+
+        if (button) {
+          this.ClearButtonHighlights();
+          button.classList.add("chartSelected");
+        }
+      }
+
+      async GetFiveDayChartData(button = null) {
+        //with resolution of 60mins at 5 days we want 24hrs * 5 days = countBack 120 data points
+        await this.fetchChartData(120, '60');
+
+        if (button) {
+          this.ClearButtonHighlights();
+          button.classList.add("chartSelected");
+        }
+      }
+
+      async GetOneDayChartData(button = null) {
+        //with resolution of 30mins at 1 day we want to countBack 48 data points
+        await this.fetchChartData(48, '30');
+
+        if (button) {
+          this.ClearButtonHighlights();
+          button.classList.add("chartSelected");
+        }
+      }
+
+      ClearButtonHighlights() {
+        const buttons = document.querySelectorAll(".GetChartFunction");
+
+        buttons.forEach((btn) => {
+          btn.classList.remove("chartSelected");
+        });
       }
     }
 
@@ -190,9 +255,6 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
       progressLine.style.right = (100 - percentage) + '%'
       totalSupply.textContent = maxSupply.toLocaleString();
       progressPercentage.textContent = percentage.toFixed(2).toString() + '%';
-      //const minedPath = document.getElementById('mined');
-      //minedPath.style.strokeDasharray = `${percentage}, 100`;
-      //document.getElementById('circulatingWart').textContent = circulatingSupply.toLocaleString('en-US') + ' WART';
     }
   }
 
@@ -205,10 +267,10 @@ import warthogShape from "../BalkyImages/warthogShape.svg"
       <button id="toggleChart" class="block ml-auto mb-4 mr-4 bg-black text-white text-xs border border-gray-300 rounded-lg px-4 py-2">Candle/Line</button> 
       <div id = "realChart" class="wartChart flex justify-between items-center bg-black"/>
       <div class="flex justify-center mt-4">
-        <button class="bg-black text-white border border-gray-300 mx-6 rounded-lg px-4 py-2">5 Days</button>
-        <button class="bg-black text-white border border-gray-300 mx-6 rounded-lg px-4 py-2">1 Month</button>
-        <button class="bg-black text-white border border-gray-300 mx-6 rounded-lg px-4 py-2">6 Months</button>
-        <button class="bg-black text-white border border-gray-300 mx-6 rounded-lg px-4 py-2">1 Day</button>
+        <button id="1dayChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2">1 Day</button>
+        <button id="5dayChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2">5 Days</button>
+        <button id="1moChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2">1 Month</button>
+        <button id="6moChart" class="GetChartFunction bg-black text-white mx-6 rounded-lg px-4 py-2">6 Months</button>
       </div>
       
     </wart-chart>
