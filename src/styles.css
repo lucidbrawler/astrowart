@@ -47,8 +47,7 @@
 .wartWhereToBuyBlock {
   width: 150px;
   height: 205px;
-  margin-left: 40px;
-  margin-right: 40px;
+  @apply md:mx-[40px] mx-4;
 }
 
 .wartWhereToBuyBlockText {
