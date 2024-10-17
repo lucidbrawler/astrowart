@@ -111,6 +111,7 @@ import { createChart } from 'lightweight-charts';
               throw new Error('Network response was not ok');
             }
             data = await response.json();
+            //data.chartChange = this.CalculateChartDataChange(data);
             this.cachedData.set(keyName, data)
             this.SaveCachedDataToLocalStorage(this.cachedData);
             //console.log("Queried and saved to cache");
@@ -151,6 +152,17 @@ import { createChart } from 'lightweight-charts';
         //console.log("Cached data is old, time to replace it.")
         return false;
       }
+
+      //CalculateChartDataChange(data) {
+      //  if ("bars" in data && data.bars.length > 1) {
+      //    const firstValue = data.bars[0].open;
+      //    const lastValue = data.bars[data.bars.length - 1].close;
+      //    const percentageDiff = ((lastValue - firstValue) / firstValue) * 100;
+
+      //    return percentageDiff.toFixed(2);
+      // }
+      //  return 0.00;
+      //}
 
       SaveCachedDataToLocalStorage(dataMap) {
         const obj = Object.fromEntries(dataMap);

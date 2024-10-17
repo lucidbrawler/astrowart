@@ -4,6 +4,10 @@ import ParallaxLayout from "../layouts/ParallaxLayout.astro";
 import MarketData from "../components/MarketData.astro";
 import openNewWindow from '../BalkyImages/OpenNewWindow.svg';
 import discordIcon from '../BalkyImages/Discord Icon.svg';
+import Hero from '../components/Hero.astro';
+//mport colorBG from '../images/WarthogParallaxBG main color 100 vh.webp'
+//import blackwhiteBG from '../images/WarthogParallaxBG main bw 100 vh.webp'
+//import whiteBG from '../images/WarthogParallaxBG main white 100 vh.webp'
 ---
 
 <html>
@@ -13,10 +17,10 @@ import discordIcon from '../BalkyImages/Discord Icon.svg';
   </head>
   <body class="bg-gray-900">
     <ParallaxLayout 
-      backgroundImage="../Images/Parallax/ParallaxTest1B.webp" 
+      backgroundImage="../Images/Parallax/WarthogParallaxBGwhite.jpg"
       scrollSpeed="1"
-      backgroundPositionY="400px">
-      <h1 class="text-5xl text-white">Main Content on Parallax</h1>
+      backgroundPositionY="2000px">
+      <Hero/>
     </ParallaxLayout>
 
     <section class="relative md:h-[900px] sm:h-[1900px] flex flex-col items-center justify-center bg-black">
@@ -72,9 +76,9 @@ import discordIcon from '../BalkyImages/Discord Icon.svg';
     </section>
 
     <ParallaxLayout 
-      backgroundImage="../Images/Parallax/ParallaxTest2B.webp" 
+      backgroundImage="../Images/Parallax/WarthogParallaxBGcolor.jpg" 
       scrollSpeed=".01" 
-      backgroundPositionY="400px">
+      backgroundPositionY="2000px">
       
     </ParallaxLayout>
 
@@ -83,9 +87,9 @@ import discordIcon from '../BalkyImages/Discord Icon.svg';
     </section>
 
     <ParallaxLayout 
-      backgroundImage="../Images/Parallax/ParallaxTest3B.webp" 
+      backgroundImage="../Images/Parallax/WarthogParallaxBGbw.jpg" 
       scrollSpeed=".2"
-      backgroundPositionY="1600px"
+      backgroundPositionY="2000px"
     >
       <h1 class="text-5xl text-yellow-300">Another Parallax Section</h1>
       <p class="text-lg text-white">With text content on top</p>
