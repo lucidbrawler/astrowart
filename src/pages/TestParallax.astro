@@ -5,6 +5,7 @@ import MarketData from "../components/MarketData.astro";
 import openNewWindow from '../BalkyImages/OpenNewWindow.svg';
 import discordIcon from '../BalkyImages/Discord Icon.svg';
 import Hero from '../components/Hero.astro';
+import WhatsNew from '../components/WhatsNew.astro';
 //mport colorBG from '../images/WarthogParallaxBG main color 100 vh.webp'
 //import blackwhiteBG from '../images/WarthogParallaxBG main bw 100 vh.webp'
 //import whiteBG from '../images/WarthogParallaxBG main white 100 vh.webp'
@@ -16,12 +17,33 @@ import Hero from '../components/Hero.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body class="bg-gray-900">
-    <ParallaxLayout 
+    <ParallaxLayout
+      inset="inset-x-0"
+      height="h-[500px]"
       backgroundImage="../Images/Parallax/WarthogParallaxBGwhite.jpg"
       scrollSpeed="1"
       backgroundPositionY="2000px">
-      <Hero/>
+      <div>
+        <Hero/>
+      </div>
+      
     </ParallaxLayout>
+
+
+    <section class="relative h-[400px] flex items-center justify-center bg-gray-200">
+      <WhatsNew/>
+    </section>
+
+
+    <ParallaxLayout 
+      inset="inset-0"
+      height="h-screen"
+      backgroundImage="../Images/Parallax/WarthogParallaxBGcolor.jpg" 
+      scrollSpeed=".01" 
+      backgroundPositionY="2000px">
+      
+    </ParallaxLayout>
+
 
     <section class="relative md:h-[900px] sm:h-[1900px] flex flex-col items-center justify-center bg-black">
       <div class="wartSectionHeading text-white text-left w-9/12">WartHog Network Chart</div>
@@ -76,6 +98,8 @@ import Hero from '../components/Hero.astro';
     </section>
 
     <ParallaxLayout 
+      inset="inset-0"
+      height="h-screen"
       backgroundImage="../Images/Parallax/WarthogParallaxBGcolor.jpg" 
       scrollSpeed=".01" 
       backgroundPositionY="2000px">
@@ -87,6 +111,8 @@ import Hero from '../components/Hero.astro';
     </section>
 
     <ParallaxLayout 
+      inset="inset-0"
+      height="h-screen"
       backgroundImage="../Images/Parallax/WarthogParallaxBGbw.jpg" 
       scrollSpeed=".2"
       backgroundPositionY="2000px"
@@ -100,6 +126,8 @@ import Hero from '../components/Hero.astro';
       </section>
 
     <ParallaxLayout 
+      inset="inset-0"
+      height="h-screen"
       backgroundImage="../Images/Parallax/ParallaxTest1B.webp" 
       scrollSpeed="1.5" 
       backgroundPositionY="-200px"
