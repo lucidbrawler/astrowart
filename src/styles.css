@@ -165,6 +165,91 @@ body {
 
 
 /* =========START HERO2========== */
+
+@media (min-width:433) {
+  .hero-grid-img {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: hero-img;
+  }
+  
+  .hero-grid-img img {
+    width: 100%;            /* Make sure the image scales properly */
+    height: auto;           /* Maintain aspect ratio */
+  }
+  
+  .hero-img-btn {
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    margin:auto;
+    width:auto;
+    height: auto;
+    z-index: 1;
+    padding: 10px 20px;
+    background-color: gold;
+    color: rgb(0, 0, 0);
+    font-size: 26px;
+    justify-content: center;
+    align-items: center;
+    border: none; 
+    cursor: pointer;
+    border-radius: 5px;
+    border: solid 5px white;
+  }
+}
+
+@media (min-width: 850px) {
+  .hero-grid-img img {
+    border-radius: 10px;
+  }
+
+  .hero-img-btn {
+    background-color: gold;
+    color: rgb(0, 0, 0);
+    font-size: 26px;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    border: none; 
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .hero-grid-img {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-self: end;
+    grid-area: hero-img;
+  }
+}
+
+@media (min-width: 1248px) {
+  .hero-img-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1.2rem;
+    background-color: gold;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    padding: 15px 50px;
+    border: none; 
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .heroCutoutNew {
+    clip-path: path('M817.826 0.616318L13.1628 0.816334C5.89274 0.818396 0 7.40863 0 15.5392V81.9777C0 90.1103 5.89459 96.7026 13.1665 96.7026H58.743C66.0149 96.7026 71.9095 103.295 71.9095 111.428V371.076C71.9095 379.208 77.8041 385.801 85.076 385.801H570.123C577.395 385.801 583.289 379.208 583.289 371.076C583.289 371.076 583.289 326.601 583.289 318.468C583.289 310.335 589.184 303.743 596.456 303.743C603.728 303.743 817.834 303.743 817.834 303.743C825.105 303.743 831 297.151 831 289.018V15.3412C830.994 7.20655 825.098 0.616318 817.826 0.616318Z');
+    border-radius: 10px;
+  }
+}
+
 .article-link {
   width: 293px;
   height: 28px;
@@ -191,9 +276,8 @@ body {
 }
 
 .hero-grid {
-  position: relative;
   display: grid;
-  
+  padding-top: 1rem;
   grid-template-columns: 1fn 2fn;
   grid-template-areas: 
   'hero-text hero-img';
@@ -223,26 +307,11 @@ body {
   color: #1E1E1E;
 }
 .hero-grid-img {
+  position: relative;
   justify-self: end;
   grid-area: hero-img;
 }
-.hero-img-btn {
-  position: absolute;
-  bottom: 1rem;
-  right: 1.2rem;
-  background-color: gold;
-  color: rgb(0, 0, 0);
-  font-size: 16px;
-  padding: 15px 50px;
-  border: none; 
-  cursor: pointer;
-  border-radius: 5px;
-}
 
-.heroCutoutNew {
-  clip-path: path('M817.826 0.616318L13.1628 0.816334C5.89274 0.818396 0 7.40863 0 15.5392V81.9777C0 90.1103 5.89459 96.7026 13.1665 96.7026H58.743C66.0149 96.7026 71.9095 103.295 71.9095 111.428V371.076C71.9095 379.208 77.8041 385.801 85.076 385.801H570.123C577.395 385.801 583.289 379.208 583.289 371.076C583.289 371.076 583.289 326.601 583.289 318.468C583.289 310.335 589.184 303.743 596.456 303.743C603.728 303.743 817.834 303.743 817.834 303.743C825.105 303.743 831 297.151 831 289.018V15.3412C830.994 7.20655 825.098 0.616318 817.826 0.616318Z');
-  border-radius: 10px;
-}
 /*========END HERO2========*/
 
 @media screen and (min-width: 1024px) {
