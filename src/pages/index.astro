@@ -1,4 +1,7 @@
 ---
+import ParallaxLayout from "../layouts/ParallaxLayout.astro";
+import MarketData from "../components/MarketData.astro";
+
 import Hero from '../components/Hero.astro';
 import WhatsNew from '../components/WhatsNew.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -6,6 +9,36 @@ const title ="Warthog Network"
 ---
 
 <BaseLayout title={title} >
+    <ParallaxLayout
+      inset="inset-x-0"
+      height="h-[450px]"
+      backgroundImage="../Images/Parallax/WarthogParallaxBGwhite.jpg"
+      scrollSpeed="1"
+      backgroundPositionY="2000px">
+
     <Hero/>
+</ParallaxLayout>
+
+<section class="relative h-auto sm:auto  bg-gray-200">
     <WhatsNew/>
+  </section>
+  
+
+
+  <ParallaxLayout 
+  inset="inset-0"
+  height="h-screen"
+  backgroundImage="../Images/Parallax/WarthogParallaxBGcolor.jpg" 
+  scrollSpeed=".01" 
+  backgroundPositionY="2000px">
+  
+</ParallaxLayout>
+
+<section class=" bg-black">
+    <div class="wartSectionHeading text-white text-left w-9/12">WartHog Network Chart</div>
+    <MarketData></MarketData>
+  </section>
+
+
+
 </BaseLayout>
