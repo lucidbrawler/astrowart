@@ -4,11 +4,8 @@ import ParallaxLayout from "../layouts/ParallaxLayout.astro";
 import MarketData from "../components/MarketData.astro";
 import openNewWindow from '../BalkyImages/OpenNewWindow.svg';
 import discordIcon from '../BalkyImages/Discord Icon.svg';
-import Hero from '../components/Hero.astro';
+import Hero from '../components/Hero2.astro';
 import WhatsNew from '../components/WhatsNew.astro';
-//mport colorBG from '../images/WarthogParallaxBG main color 100 vh.webp'
-//import blackwhiteBG from '../images/WarthogParallaxBG main bw 100 vh.webp'
-//import whiteBG from '../images/WarthogParallaxBG main white 100 vh.webp'
 ---
 
 <html>
@@ -19,18 +16,17 @@ import WhatsNew from '../components/WhatsNew.astro';
   <body class="bg-gray-900">
     <ParallaxLayout
       inset="inset-x-0"
-      height="h-[500px]"
+      height="h-[450px]"
       backgroundImage="../Images/Parallax/WarthogParallaxBGwhite.jpg"
       scrollSpeed="1"
       backgroundPositionY="2000px">
-      <div>
-        <Hero/>
-      </div>
-      
+
+      <Hero />
+    
     </ParallaxLayout>
 
 
-    <section class="relative h-[400px] flex items-center justify-center bg-gray-200">
+    <section class="relative h-[400px]  bg-gray-200">
       <WhatsNew/>
     </section>
 
