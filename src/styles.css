@@ -190,20 +190,20 @@ body {
   'hero-text hero-img';
 }
 .hero-grid-text {
-  width: 25rem;
+  max-width: 25rem;
   grid-area: hero-text;
 }
 .hero-text-title-bold {
   font-family: 'Montserrat';
   font-style: italic;
   font-weight: 700;
-  font-size: 50px;
+  font-size: 3.3rem;
   line-height: 53px;
   color: #1E1E1E;
 }
 .hero-text-title {
   font-family: 'Montserrat';
-  font-size: 50px;
+  font-size: 3rem;
   line-height: 53px;
   color: #1E1E1E;
 }
