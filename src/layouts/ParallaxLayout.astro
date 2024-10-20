@@ -8,33 +8,53 @@ const { inset, height, backgroundImage, scrollSpeed = "1", backgroundPositionY =
     gsap.registerPlugin(ScrollTrigger);
 
     class ParallaxEffect extends HTMLElement {
+        constructor() {
+            super();
+            this.gsapInstance = null;
+        }
         connectedCallback() {
+            this.UpdateViewportHeight()
+            window.addEventListener('resize', () => this.UpdateViewportHeight());
             const scrollSpeed = this.dataset.scrollspeed;
-            const backgroundPositionY = this.dataset.backgroundpositiony;
             const parallaxBG = this.querySelector(".parallax-bg");
-            //console.log('test');
-            //console.log(this.dataset)
-            //console.log("ScrollSpeed: " + scrollSpeed + ", BackgroundPosY: " + backgroundPositionY);
-
-            if (typeof window !== "undefined") {
-                gsap.to(parallaxBG, {
-                    backgroundPositionY: backgroundPositionY,
-                    scrollTrigger: {
-                        trigger: this,
-                        start: "top bottom", //Try top 80% to start the trigger early
-                        end: "bottom top",
-                        scrub: true,
-                        markers: false
-                        //Look into testing these additional properties
-                        //anticipation: 1, //used to make the start and end transitions smoother
-                        //invalidateOnRefresh: true, makes GSAP recalculate on resize of window
-                        //pin: true //pins section to smooth out animation
-                    },
-                    duration: scrollSpeed,
-                    //Could try adding ease: "power1.inOut" as another method to smooth
-                });  
-            }
+                        
+            this.gsapInstance = gsap.to(parallaxBG, {
+                backgroundPositionY: this.CalculateBackgroundPositionY(),
+                scrollTrigger: {
+                    trigger: this,
+                    start: "top bottom", //Try top 80% to start the trigger early
+                    end: "bottom top",
+                    scrub: true,
+                    markers: false,
+                    invalidateOnRefresh: true
+                    //Look into testing these additional properties
+                    //anticipation: 1, //used to make the start and end transitions smoother
+                    //invalidateOnRefresh: true, makes GSAP recalculate on resize of window
+                    //pin: true //pins section to smooth out animation
+                },
+                duration: scrollSpeed,
+                //Could try adding ease: "power1.inOut" as another method to smooth
+            });  
+        
            
+        }
+        UpdateViewportHeight() {
+            if (this.gsapInstance) {
+                this.gsapInstance.vars.backgroundPositionY =  this.CalculateBackgroundPositionY();
+                this.gsapInstance.vars.scrollTrigger.refresh();
+                this.gsapInstance.vars.duration = this.dataset.scrollspeed;
+            }
+            
+            //console.log('updated viewport height ' + this.viewportHeight + ' calc to: ' + this.CalculateBackgroundPositionY());
+        }
+
+        CalculateBackgroundPositionY() {
+            const value = Math.round(window.innerHeight * 1.521);
+            console.log(`calculated value: ${value}`);
+            return `${value}px`;
+        }
+        disconnectedCallback() {
+            window.removeEventListener('resize', this.UpdateViewportHeight.bind(this));
         }
     }
 
