@@ -19,7 +19,7 @@ const { inset, height, backgroundTailwind, scrollSpeed = "1" } = Astro.props;
             const parallaxBG = this.querySelector(".parallax-bg");
                         
             this.gsapInstance = gsap.to(parallaxBG, {
-                backgroundPositionY: () => this.CalculateBackgroundPositionY(),
+                backgroundPosition: () => {return `50% 95%`},
                 scrollTrigger: {
                     trigger: this,
                     start: "top bottom", //Try top 80% to start the trigger early
@@ -32,7 +32,7 @@ const { inset, height, backgroundTailwind, scrollSpeed = "1" } = Astro.props;
                     //invalidateOnRefresh: true, makes GSAP recalculate on resize of window
                     //pin: true //pins section to smooth out animation
                 },
-                duration: scrollSpeed,
+                //duration: scrollSpeed,
                 //Could try adding ease: "power1.inOut" as another method to smooth
             });  
         
@@ -43,11 +43,6 @@ const { inset, height, backgroundTailwind, scrollSpeed = "1" } = Astro.props;
             //console.log('updated viewport height ' + this.viewportHeight + ' calc to: ' + this.CalculateBackgroundPositionY());
         }
 
-        CalculateBackgroundPositionY() {
-            const value = Math.round(window.innerHeight * 1.335); //1.521
-            //console.log(`calculated value: ${value}`);
-            return `${value}px`;
-        }
         disconnectedCallback() {
             window.removeEventListener('resize', this.UpdateViewportHeight.bind(this));
         }
@@ -57,7 +52,7 @@ const { inset, height, backgroundTailwind, scrollSpeed = "1" } = Astro.props;
 </script>
 
 <parallax-effect data-scrollSpeed={scrollSpeed}>
-    <section class={`${height} relative parallax-bg bg-cover bg-center ${backgroundTailwind}`}>
+    <section class={`${height} relative parallax-bg ${backgroundTailwind}`}>
         <div class={`absolute ${inset} flex items-center justify-center`}>
             <slot />
         </div>
