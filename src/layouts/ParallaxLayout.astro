@@ -11,6 +11,7 @@ const { inset, height, backgroundTailwind, scrollSpeed = "1" } = Astro.props;
         constructor() {
             super();
             this.gsapInstance = null;
+            this.lastSize = this.GetCurrentSize();
         }
         connectedCallback() {
             this.UpdateViewportHeight()
@@ -19,7 +20,7 @@ const { inset, height, backgroundTailwind, scrollSpeed = "1" } = Astro.props;
             const parallaxBG = this.querySelector(".parallax-bg");
                         
             this.gsapInstance = gsap.to(parallaxBG, {
-                backgroundPosition: () => {return `50% 95%`},
+                backgroundPosition: () => {return `50% 100%`},
                 scrollTrigger: {
                     trigger: this,
                     start: "top bottom", //Try top 80% to start the trigger early
@@ -38,9 +39,27 @@ const { inset, height, backgroundTailwind, scrollSpeed = "1" } = Astro.props;
         
            
         }
+        GetCurrentSize() {
+            const currentWidth = window.innerWidth;
+            if (currentWidth >= 1024) {
+                return 'lg';
+            }
+            if (currentWidth >= 768) {
+                return 'md';
+            }
+            if (currentWidth >= 640) {
+                return "sm";
+            }
+            return "sm";
+        }
+
         UpdateViewportHeight() {
-            ScrollTrigger.refresh();
-            //console.log('updated viewport height ' + this.viewportHeight + ' calc to: ' + this.CalculateBackgroundPositionY());
+            const currentSize = this.GetCurrentSize();
+            if (this.lastSize !== currentSize) {
+                ScrollTrigger.refresh();
+                this.lastSize = currentSize;
+                console.log('updated viewport width ' + this.lastSize);
+            }
         }
 
         disconnectedCallback() {
