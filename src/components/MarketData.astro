@@ -263,6 +263,7 @@ import { createChart } from 'lightweight-charts';
       super();
       this.refreshInterval = 60000;
       this.timer = null;
+      this.estimatedHalvingPointsByMinedAmount = [];
     }
 
     connectedCallback() {
@@ -282,13 +283,16 @@ import { createChart } from 'lightweight-charts';
             throw new Error('Network response was not ok');
           }
           const data = await response.json();
-          
+          await this.BuildHalvingPointEstimates(data)
           this.DisplayMinedInfo(data);
 
           document.getElementById('symbol').textContent = data.symbol;
           document.getElementById('price').textContent = '$' + data.lastPrice;
           document.getElementById('updated').textContent = new Date().toLocaleTimeString();
           document.getElementById('marketCap').textContent = '$' + data.marketcapNumber.toLocaleString();
+
+          
+
         } catch (error) {
           console.error('Error fetching market data:', error);
           document.getElementById('symbol').textContent = 'Error';
@@ -313,23 +317,58 @@ import { createChart } from 'lightweight-charts';
       const maxSupply = 18921600
       const circulatingSupply = parseInt(apiData.primaryCirculation);
       const percentage = ((circulatingSupply / maxSupply) * 100);
+
+      const amountToMineForNextHalving = this.CalculateNextAmountRequiredToMineForHalving(this.estimatedHalvingPointsByMinedAmount, circulatingSupply);
+      const nextHalvingPercentage = ((amountToMineForNextHalving / maxSupply) * 100);
       
       const progressBar = document.querySelector(".progress-bar");
       const progressLine = document.querySelector(".progress-line");
       const totalSupply = document.querySelector(".totalSupply");
       const progressPercentage = document.querySelector(".progress-percentage");
       const progressCirculatingSupply = document.querySelector(".progress-circulatingSupply");
-      const nextHavingLine = document.querySelector(".nextHaving-line");
+      const nextHalvingLine = document.querySelector(".nextHalving-line");
 
       progressBar.style.width = percentage + '%';
       progressLine.style.right = (100 - percentage) + '%'
-      nextHavingLine.style.right = '50%';
+      nextHalvingLine.style.right = nextHalvingPercentage + '%';
       totalSupply.textContent = maxSupply.toLocaleString();
       progressPercentage.textContent = percentage.toFixed(2).toString() + '%';
       progressCirculatingSupply.textContent = circulatingSupply.toLocaleString();
     }
+    async BuildHalvingPointEstimates(apiData) {
+      const blockHeightPerHalving = 3153600;
+      const initialRewardInWart = 3;
+      const maxSupply = 18921600
+      const circulatingSupply = parseInt(apiData.primaryCirculation);
+
+      //Build a list of amounts required to mine at each halving stage
+      if (this.estimatedHalvingPointsByMinedAmount.length <= 1) {
+        this.estimatedHalvingPointsByMinedAmount.push({AmountMined: (blockHeightPerHalving * initialRewardInWart), reward: initialRewardInWart });
+      } else {
+        const lastReward = this.estimatedHalvingPointsByMinedAmount[this.estimatedHalvingPointsByMinedAmount.length - 1].reward;
+        const thisReward = lastReward / 2;
+        this.estimatedHalvingPointsByMinedAmount.push({AmountMined: (blockHeightPerHalving * thisReward), reward: thisReward });
+      }
+
+      console.log(this.estimatedHalvingPointsByMinedAmount);
+    }
+
+    CalculateNextAmountRequiredToMineForHalving(estimateList, currentMined) {
+      let runningTotal = 0;
+
+      for (let i = 0; i < estimateList.length; i++) {
+        runningTotal += estimateList[i].AmountMined;
+
+        if (runningTotal > currentMined) {
+          break;
+        }
+      }
+
+      return runningTotal;
+    }
   }
 
+  
   customElements.define('market-data', MarketDataComponent);
 </script>
 
@@ -372,7 +411,7 @@ import { createChart } from 'lightweight-charts';
             <div class="progress-percentage absolute right-0 mr-2 text-yellow-400 font-bold text-xl">%</div>
             <div class="progress-circulatingSupply absolute right-0 mr-2 top-6 text-white text-md">0</div>
           </div>
-          <div class="nextHaving-line absolute right-0 top-[-70px] w-[2px] h-[70px] bg-green-400">
+          <div class="nextHalving-line absolute right-0 top-[-70px] w-[2px] h-[70px] bg-green-400">
             <div class="absolute left-0 ml-2 text-md font-bold text-green-400">Next Halving</div>
           </div>
           <div class="text-right">
