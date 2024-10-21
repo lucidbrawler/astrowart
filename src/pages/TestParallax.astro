@@ -17,9 +17,8 @@ import WhatsNew from '../components/WhatsNew.astro';
     <ParallaxLayout
       inset="inset-x-0"
       height="h-[450px]"
-      backgroundImage="../Images/Parallax/WarthogParallaxBGwhite.jpg"
-      scrollSpeed="1"
-      backgroundPositionY="2000px">
+      backgroundTailwind="bg-[url('../Images/Parallax/WarthogParallaxBGwhite640.jpg')] md:bg-[url('../Images/Parallax/WarthogParallaxBGwhite768.jpg')] lg:bg-[url('../Images/Parallax/WarthogParallaxBGwhite.jpg')]"
+      scrollSpeed="1">
 
       <Hero />
     
@@ -34,9 +33,8 @@ import WhatsNew from '../components/WhatsNew.astro';
     <ParallaxLayout 
       inset="inset-0"
       height="h-screen"
-      backgroundImage="../Images/Parallax/WarthogParallaxBGcolor.jpg" 
-      scrollSpeed=".01" 
-      backgroundPositionY="2000px">
+      backgroundTailwind="bg-[url('../Images/Parallax/WarthogParallaxBGcolor640.jpg')] md:bg-[url('../Images/Parallax/WarthogParallaxBGcolor768.jpg')] lg:bg-[url('../Images/Parallax/WarthogParallaxBGcolor.jpg')]" 
+      scrollSpeed=".01">
       
     </ParallaxLayout>
 
@@ -96,9 +94,8 @@ import WhatsNew from '../components/WhatsNew.astro';
     <ParallaxLayout 
       inset="inset-0"
       height="h-screen"
-      backgroundImage="../Images/Parallax/WarthogParallaxBGcolor.jpg" 
-      scrollSpeed=".01" 
-      backgroundPositionY="2000px">
+      backgroundTailwind="bg-[url('../Images/Parallax/WarthogParallaxBGcolor.jpg')]" 
+      scrollSpeed=".01">
       
     </ParallaxLayout>
 
@@ -109,10 +106,8 @@ import WhatsNew from '../components/WhatsNew.astro';
     <ParallaxLayout 
       inset="inset-0"
       height="h-screen"
-      backgroundImage="../Images/Parallax/WarthogParallaxBGbw.jpg" 
-      scrollSpeed=".2"
-      backgroundPositionY="2000px"
-    >
+      backgroundTailwind="bg-[url('../Images/Parallax/WarthogParallaxBGbw.jpg')]" 
+      scrollSpeed=".2">
       <h1 class="text-5xl text-yellow-300">Another Parallax Section</h1>
       <p class="text-lg text-white">With text content on top</p>
     </ParallaxLayout>
@@ -124,9 +119,7 @@ import WhatsNew from '../components/WhatsNew.astro';
     <ParallaxLayout 
       inset="inset-0"
       height="h-screen"
-      backgroundImage="../Images/Parallax/ParallaxTest1B.webp" 
-      scrollSpeed="1.5" 
-      backgroundPositionY="-200px"
-    />
+      backgroundTailwind="bg-[url('../Images/Parallax/ParallaxTest1B.webp')]" 
+      scrollSpeed="1.5"/>
   </body>
 </html>

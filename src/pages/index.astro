@@ -11,10 +11,9 @@ const title ="Warthog Network"
 <BaseLayout title={title} >
     <ParallaxLayout
       inset="inset-x-0"
-      height="h-[775px] lg:h-[400px] md:h-[900px] "
-      backgroundImage="../Images/Parallax/WarthogParallaxBGwhite.jpg"
-      scrollSpeed="1"
-      backgroundPositionY="2000px">
+      height="h-[775px] md:h-[900px] lg:h-[420px]"
+      backgroundTailwind="bg-[url('../Images/Parallax/WarthogParallaxBGwhite640.jpg')] md:bg-[url('../Images/Parallax/WarthogParallaxBGwhite768.jpg')] lg:bg-[url('../Images/Parallax/WarthogParallaxBGwhite.jpg')]"
+      scrollSpeed="1">
 
     <Hero/>
 </ParallaxLayout>
@@ -28,9 +27,8 @@ const title ="Warthog Network"
   <ParallaxLayout 
   inset="inset-0"
   height="h-screen"
-  backgroundImage="../Images/Parallax/WarthogParallaxBGcolor.jpg" 
-  scrollSpeed=".01" 
-  backgroundPositionY="2000px">
+  backgroundTailwind="bg-[url('../Images/Parallax/WarthogParallaxBGcolor640.jpg')] md:bg-[url('../Images/Parallax/WarthogParallaxBGcolor768.jpg')] lg:bg-[url('../Images/Parallax/WarthogParallaxBGcolor.jpg')]"
+  scrollSpeed=".01">
   
 </ParallaxLayout>
 
