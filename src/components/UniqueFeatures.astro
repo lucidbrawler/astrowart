@@ -1,0 +1,165 @@
+---
+import TinyWart from "../BalkyImages/Isolation_Mode.svg";
+import Coin from "../BalkyImages/001-coin.svg";
+import Goal from "../BalkyImages/goal 1.svg";
+import Sprout from '../BalkyImages/002-sprout.svg';
+import Profile from '../BalkyImages/004-profile.svg';
+import Programming from '../BalkyImages/006-programming.svg';
+import Trolly from '../BalkyImages/005-trolley.svg';
+import Group from '../BalkyImages/Group 5.svg';
+---
+
+<style>
+    .UniqueFeatures {
+        background: radial-gradient(
+            circle at 24.1% 68.8%,
+            rgb(50, 50, 50) 0%,
+            rgb(0, 0, 0) 99.4%
+        );
+        color: white;
+    }
+    h1 {
+        font-size: 4rem;
+        margin-bottom: 3rem;
+        font-weight: 600;
+    }
+    .tinywart {
+        padding-right: 2rem;
+        padding-left: 1rem;
+        width: 8rem;
+    }
+    h2 {
+        font-size: 1.2rem;
+        display: flex;
+        padding-right: 2rem;
+    }
+    .UniqueFeatures-Grid {
+        font-family: "Montserrat";
+        line-height: 3rem;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fn 2fn;
+        grid-template-areas: "tokenomics features";
+    }
+    .tokenomics {
+        margin-top: 3rem;
+        grid-area: tokenomics;
+    }
+    .features {
+        grid-area: features;
+    }
+    .featuresGrid {
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fn 1fn;
+        grid-template-areas: "list1 list2";
+    }
+    .list1 {
+        grid-area: list1;
+    }
+    .list2 {
+        grid-area: list2;
+    }
+    img {
+        padding-left: 1rem;
+    }
+    .token {
+        font-weight: 600;
+        font-size: 1.5rem;
+    }
+    header {
+        padding-top: 2rem;
+        padding-left: 2rem;
+    }
+    p {
+        padding-right: 1rem;
+        font-size: 0.8rem;
+    }
+    .tokenp {
+        margin-top: 2rem;
+        line-height: 1.8rem;
+        max-width: 20rem;
+    }
+    @media screen and (max-width: 1224px) {
+        .UniqueFeatures-Grid {
+            font-family: "Montserrat";
+            line-height: 3rem;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fn 2fn;
+            grid-template-areas:
+                "tokenomics"
+                "features";
+        }
+
+    
+    }
+    @media screen and (max-width: 1024px) {
+        .UniqueFeatures-Grid {
+            font-family: "Montserrat";
+            line-height: 3rem;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fn 2fn;
+            grid-template-areas:
+                "tokenomics"
+
+                "features";
+        }
+        .featuresGrid {
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fn 1fn;
+        grid-template-areas: 
+        "list1" 
+        "list2";
+    }
+}
+
+</style>
+
+<div class="UniqueFeatures">
+    <header>
+        <p class="token">TOKEN</p>
+        <h1 class="flex">
+            What makes us unique?
+            <img class="tinywart" src={TinyWart.src} />
+        </h1>
+    </header>
+    <div class="UniqueFeatures-Grid">
+        <section class="tokenomics ">
+            <h2>TOKENOMICS<img src={Coin.src} /></h2>
+            <p class="tokenp ">
+                This is not the default kind of project where you see a
+                disproportionately high allocation of the total supply unfairly
+                reserved for the team, the advisors and their pockets. 0% is
+                minted, premined, reserved for anyone, 100% is publicly
+                mineable.
+            </p>
+        </section>
+
+        <section class="features featuresGrid">
+            <features-list class="list1">
+         
+                <h2>No Pre-mine <img src={Goal.src} /></h2>
+                <p class="">Project was fairly launched on Bitcointalk</p>
+
+                <h2>Written from scratch <img src={Sprout.src} /></h2>
+                <p>This project is NOT a fork/copy of anything else</p>
+                <h2>No reserved 'Team/Dev' fund <img src={Profile.src} /></h2>
+                <p>
+                    No unfair allocation to anybody aka "team" / "development"
+                    funds
+                </p>
+            </features-list>
+            <features-list>
+                <h2>Modern Codebase <img src={Programming.src} /></h2>
+                <p>Using modern C++20 and tools like clanged, meson, ninja</p>
+                <h2>100% mineable <img src={Trolly.src} /></h2>
+                <p>100% of supply is publicly mineable, no coins were minted</p>
+                <h2>Open Source <img src={Group.src} /></h2>
+                <p>You are welcome to contribute</p>
+            </features-list>
+        </section>
+    </div>
+</div>
