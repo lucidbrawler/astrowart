@@ -340,14 +340,23 @@ import { createChart } from 'lightweight-charts';
       const initialRewardInWart = 3;
       const maxSupply = 18921600
       const circulatingSupply = parseInt(apiData.primaryCirculation);
+      let runningTotal = 0;
 
       //Build a list of amounts required to mine at each halving stage
       if (this.estimatedHalvingPointsByMinedAmount.length <= 1) {
-        this.estimatedHalvingPointsByMinedAmount.push({AmountMined: (blockHeightPerHalving * initialRewardInWart), reward: initialRewardInWart });
+        const amountToMine = (blockHeightPerHalving * initialRewardInWart);
+        runningTotal = amountToMine;
+        this.estimatedHalvingPointsByMinedAmount.push({AmountMined: amountToMine, reward: initialRewardInWart, runningTotal: runningTotal });
       } else {
-        const lastReward = this.estimatedHalvingPointsByMinedAmount[this.estimatedHalvingPointsByMinedAmount.length - 1].reward;
-        const thisReward = lastReward / 2;
-        this.estimatedHalvingPointsByMinedAmount.push({AmountMined: (blockHeightPerHalving * thisReward), reward: thisReward });
+        do {
+          const lastReward = this.estimatedHalvingPointsByMinedAmount[this.estimatedHalvingPointsByMinedAmount.length - 1].reward;
+          const thisReward = lastReward / 2;
+          const amountToMine = (blockHeightPerHalving * thisReward);
+          runningTotal += this.estimatedHalvingPointsByMinedAmount[this.estimatedHalvingPointsByMinedAmount.length - 1].runningTotal;
+
+          this.estimatedHalvingPointsByMinedAmount.push({AmountMined: amountToMine, reward: thisReward, runningTotal: runningTotal });
+        }while(runningTotal <= circulatingSupply)
+
       }
 
       console.log(this.estimatedHalvingPointsByMinedAmount);
@@ -357,7 +366,7 @@ import { createChart } from 'lightweight-charts';
       let runningTotal = 0;
 
       for (let i = 0; i < estimateList.length; i++) {
-        runningTotal += estimateList[i].AmountMined;
+        runningTotal += estimateList[i].runningTotal;
 
         if (runningTotal > currentMined) {
           break;
