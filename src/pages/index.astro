@@ -6,6 +6,7 @@ import Hero from '../components/Hero.astro';
 import WhatsNew from '../components/WhatsNew.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import UniqueFeatures from "../components/UniqueFeatures.astro";
+import RevolutionaryFeatures from "../components/RevolutionaryFeatures.astro";
 const title ="Warthog Network"
 ---
 
@@ -27,10 +28,13 @@ const title ="Warthog Network"
 
 
   <ParallaxLayout 
-  inset="inset-0"
-  height="h-screen"
+  inset=""
+  height="h-[75rem] sm:h-[50rem] md:h-[50rem] lg:h-screen"
   backgroundTailwind="bg-[url('../Images/Parallax/WarthogParallaxBGcolor640.jpg')] md:bg-[url('../Images/Parallax/WarthogParallaxBGcolor768.jpg')] lg:bg-[url('../Images/Parallax/WarthogParallaxBGcolor.jpg')]"
   scrollSpeed="1">
+ 
+  <RevolutionaryFeatures/>
+
   
 </ParallaxLayout>
 
